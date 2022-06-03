@@ -3,9 +3,11 @@
 #include<time.h>
 
 typedef struct{
-	int orientation;
-	int shape;
-}piece;
+int** form; //Le tableau contenant la pièce
+int location; //L'emplacement de la colonne tout à gauche de la pièce
+int lenght; //la hauteur de la pièce
+int width; // la largeur de la pièce
+}shape;
 
 int block(){
 	int select,a;
@@ -39,77 +41,71 @@ int block(){
 	}
 }
 
-int** finalshape(int orientation, int shape){
+shape finalshape(int orientation, int shapes){
 	int a,i,j;
-	int **t;
-	switch(shape){
+	shape t;
+	switch(shapes){
 		case 1:			//square shape
 			a=2;
-			t=malloc(a*sizeof(int*));
-			if(t==NULL){
+			t.form=malloc(a*sizeof(int*));
+			if(t.form==NULL){
 				printf("malloc is bs\n");
 				exit(1);
 			}
 			for(i=0;i<a;i++){
-				t[i]=malloc(a*sizeof(int));
-				if(t[i]==NULL){
+				t.form[i]=malloc(a*sizeof(int));
+				if(t.form[i]==NULL){
 					printf("malloc is bs\n");
 					exit(1);
 				}
 				for(j=0;j<a;j++){
-					t[i][j]=1;
+					t.form[i][j]=1;
 				}
 			}
+			t.width=2;
+			t.lenght=2;
 			break;
 		case 2:			//t shape
 			a=3;
-			t=malloc(a*sizeof(int*));
-			if(t==NULL){
+			t.form=malloc(a*sizeof(int*));
+			if(t.form==NULL){
 				printf("malloc is bs\n");
 				exit(1);
 			}
 			for(i=0;i<a;i++){
-				t[i]=malloc(a*sizeof(int));
-				if(t[i]==NULL){
+				t.form[i]=malloc(a*sizeof(int));
+				if(t.form[i]==NULL){
 					printf("malloc is bs\n");
 					exit(1);
 				}
 					for(j=0;j<a;j++){
-						t[i][j]=0;
+						t.form[i][j]=0;
 					}
 			}
-			t[0][1]=1;
+			t.form[0][1]=1;
 			for(i=0;i<a;i++){
-				t[1][i]=1;
+				t.form[1][i]=1;
 			}
+			t.width=3;
+			t.lenght=2;
 			break;
 
 
 
 		default:
-			printf("shape #%d not handled yet\n",shape);
+			printf("shape #%d not handled yet\n",shapes);
 			exit(200);
 	}	
 	return t;
 }
 
 int main(){
-	int rb,or;
-	int **ns;
-	rb=block();	//choose a random shape
+	int rb,or,i;
+	shape ns;
+	rb=2;	//choose a random shape
 	or=1;
 	ns=finalshape(or,rb);
-	/*for(int i=0;i<3;i++){
-		for(int j=0;j<3;j++){
-			printf("%d",ns[i][j]);
-		}
-	printf("\n");
-	}*/
-	free(ns);
+	printf("%d the width\n",ns.width);
+	printf("%d the length\n",ns.lenght);
+	free(ns.form);
 }
-
-
-
-
-
-
