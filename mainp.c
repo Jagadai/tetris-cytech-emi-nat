@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
+#include <errno.h>
 #define SIDE 10	//Taille de la grille en largeur et longueur
 
 typedef struct{
@@ -45,43 +47,40 @@ void actualscore(int* score, int combo){	//calcul du score actuel en fonction de
 	}
 }
 
-int cleaning(int** grid){	//nettoyage des lignes pleines et calcul des lignes remplies pour le score
-	int j, score;
-	int regulation = 0, full=0;
+
+int fullLine(int* line){	//vérifie si une ligne est pleine
+	int counter = 0;
+	for (int i=0; i<SIDE; i++){
+		if (line[i] == 1) counter++;
+	}
+	if (counter == SIDE) return 1;
+	return 0;
+}
+
+void clearLine(int* line){	//nettoie une ligne
+	for (int i=0; i<SIDE; i++){
+		line[i]=0;
+	}
+}
+
+void cleaning(int** grid, int* score){	//nettoyage des lignes pleines et calcul des lignes remplies pour le score
+	int combo = 0;
 	for (int i = SIDE-1; i>=0; i--){
-		if (regulation >0){	//si la ligne est une copie de celle du dessus
-			for(j=0;j<SIDE;j++){
-				grid[i][j]=1;
+		while (fullLine(grid[i])){
+			clearLine(grid[i]);	//On nettoie la ligne
+			combo++;
+			for (int k = i; k>0; k--){	//On remplace chaque ligne par sa précédente que l'on nettoie
+				for (int j=0; j<SIDE; j++){
+					grid[k][j]=grid[k-1][j];
+				}
+				clearLine(grid[k-1]);
 			}
-			regulation = regulation-1;	//régulation terminée
 		}
-		j=0;
-		while (j<SIDE & grid[i][j] !=0){	//vérifier si la ligne est pleine
-			j++;
-		}
-		if (j==SIDE-1){
-			full = 1;
-		}
-		if (full){	//si elle est pleine on copie celle du dessus et on doit réguler cette situation
-			for(j=0;j<SIDE;j++){
-				grid[i][j]=grid[i-1][j];
-			}
-			regulation++;
-		}
-		
 	}
-	return score;
+	actualscore(score, combo);
+	
 }
-/*
-int lost(int** grid){	//Vérification de fin de jeu
-	int j=0, loser = 0;
-	while (grid[0][j] == 0){	//parcours de la première ligne tant que vide
-		j++;
-	}
-	if (j!=SIDE-1) loser = 1;	//si l'indice de parcours n'est pas égal à la taille de la ligne c'est perdu
-	return loser;
-}
-*/
+
 void display(int** grid){	//Affichage du jeu
 	printf("Voici votre grille: \n ");
 	for (int i=65; i<(SIDE+65); i++){
@@ -155,6 +154,61 @@ void placePiece(int** grid, piece npiece){	//à n'appeler que si lost = 0
 	}
 }
 
+void scoreSave(int* score){
+	int copy;	//Indice de caractère de copie d'un fichier à l'autre
+	int fscore = 100000000;		//score du joueur dans le parcours du tableau pour comparaison
+	char fname[50];		//nom du joueur dans le parcours du tableau pour comparaison, en soit il sert à rien c'est juste pour le parcours
+	char playername[50];	//Création nom du joueur pour scores
+	FILE* scores = NULL;
+	FILE* temp = NULL;
+	scores = fopen("scores.txt", "r+");
+	temp = fopen("temp.txt", "r+");
+	if (scores == NULL){
+		printf("Ouverture du fichier impossible\n");
+		printf("code d'erreur: %d \n", errno);
+		printf("Message d'erreur: %s \n", strerror(errno));
+		exit(3);
+	}
+	if (temp == NULL){
+		printf("Ouverture du fichier impossible\n");
+		printf("code d'erreur: %d \n", errno);
+		printf("Message d'erreur: %s \n", strerror(errno));
+		exit(4);
+	}
+	
+	printf("Entrez votre nom: ");
+	scanf("%s", playername);	//scan du nom du joueur
+	printf("%s, votre score est de %d\n", playername, *score);	//Affichage nom du joueur et score
+	
+	//Copie de scores dans temp puis recopie en tenant compte des highscores
+	rewind(scores);		
+	while((copy=fgetc(scores))!=EOF){	//Copie dans temp
+		fputc(copy, temp);
+	}
+	rewind(scores);		//On revient au début de chaque fichier pour le recopiage mis en forme
+	rewind(temp);
+	while (fscore>=*score){	//scan du fichier temporaire jusqu'à ce que le score du joueur du fichier soit plus faible que celui du joueur actuel
+		fscanf(temp, "%s %d", fname, &fscore);
+		if (fscore>=*score){	//On ne copie dans le fichier que si c'est au dessus du score actuel
+			fprintf(scores, "%s %d\n", fname, fscore);
+		}
+	}
+	fprintf(scores, "%s %d\n", playername, *score);	//écriture du score actuel
+	fprintf(scores, "%s %d\n", fname, fscore);	//On écrit quand même le dernier qu'on a pas écrit parce qu'il était au dessus
+	while (fscanf(temp, "%s %d", fname, &fscore) != EOF){	//écriture du reste des scores
+		fprintf(scores, "%s %d\n", fname, fscore);
+	}
+	printf("Highscores: \n");
+	rewind(scores);
+	char reader[50];
+	int highcounter = 0;
+	while (fgets(reader, 50, scores) != NULL & highcounter  < 5){
+		printf("%s", reader);
+		highcounter++;
+	}
+	fclose(scores);
+	fclose(temp);
+}
 
 int main(){
 	srand(time(NULL));
@@ -206,7 +260,7 @@ int main(){
 		t[i]=malloc(a*sizeof(int));
 		if(t[i]==NULL){
 			printf("malloc is bs\n");
-			exit(1);
+			exit(2);
 		}
 			for(j=0;j<a;j++){
 				t[i][j]=0;
@@ -224,10 +278,9 @@ int main(){
 
 	//////////////////////////////////////////////////////////////////////
 	initGrid(grid);
-	//randomGrid(grid);
+	
 	
 	display(grid);
-	
 	placePiece(grid, carre);
 	display(grid);
 	carre.location = 4;
@@ -236,9 +289,23 @@ int main(){
 	carre.location = 3;
 	placePiece(grid, carre);
 	display(grid);
-	placePiece(grid, triangle);
+	//placePiece(grid, triangle);
+	//display(grid);
+	carre.location = 0;
+	placePiece(grid, carre);
+	display(grid);
+	carre.location = 6;
+	placePiece(grid, carre);
+	display(grid);
+	carre.location = 8;
+	placePiece(grid, carre);
+	display(grid);
+	cleaning(grid, score);
 	display(grid);
 	
+	scoreSave(score);
+	
+	free(score);
 	free(grid);
 	return 0;
 }
