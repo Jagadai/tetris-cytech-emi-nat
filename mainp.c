@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define SIDE 10
+#define SIDE 10	//Taille de la grille en largeur et longueur
 
 typedef struct{
 	int** form;
@@ -98,6 +98,7 @@ void display(int** grid){	//Affichage du jeu
 
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //PROCEDURE DE TEST
 void randomGrid(int** grid){
 	for(int i=0;i<SIDE;i++){	//remplissage random pour tests
@@ -106,6 +107,7 @@ void randomGrid(int** grid){
 		}
 	}
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void initGrid(int** grid){
 	for(int i=0;i<SIDE;i++){	//initialisation de toute la grille visible
@@ -130,12 +132,22 @@ int lost(int** grid, piece npiece){	//vérifie si l'on a perdu en essayant de pl
 	return 0;
 }
 
+piece adjustment(piece npiece){	//Ajuste la position de la pièce si elle est trop à droite
+	while (npiece.location+npiece.width>SIDE){
+		npiece.location--;
+	}
+	return npiece;
+}
+
 void placePiece(int** grid, piece npiece){	//à n'appeler que si lost = 0
+	npiece = adjustment(npiece);	//Ajuste la pièce si trop à droite
 	int depth = 1;	//La première ligne a déjà été vérifiée lors de lost, normalement elle est safe
-	while (possiblePlacement(grid, npiece, depth) & depth<SIDE-npiece.lenght){	//Tant que pas de collision et que sol pas atteint on descend la pièce
+	while (possiblePlacement(grid, npiece, depth) & (depth<SIDE-npiece.lenght)){	//Tant que pas de collision et que sol pas atteint on descend la pièce
 		depth++;
 	}
-	depth--; //On remonte d'un cran pour le placement
+	if (depth<SIDE-npiece.lenght){	//On vérifie pourquoi on stop la descente, si c'est à cause du sol on remonte pas
+		depth--; //On remonte d'un cran pour le placement
+	}
 	for(int i=0; i<npiece.lenght; i++){	//Place la pièce dans la grille
 		for(int j=0; j<npiece.width; j++){
 			grid[depth+i][npiece.location+j] = npiece.form[i][j];
@@ -207,7 +219,7 @@ int main(){
 	triangle.form = t;
 	triangle.lenght = 2;
 	triangle.width = 3;
-	triangle.location = 2;
+	triangle.location = 6;
 
 
 	//////////////////////////////////////////////////////////////////////
