@@ -82,9 +82,9 @@ shape finalshape(int orientation, int shapes){
 						t.form[i][j]=0;	//everything to 0
 					}
 			}
-			t.form[1][1]=1;				//we actually make the shape
+			t.form[0][1]=1;				//we actually make the shape
 			for(i=0;i<a;i++){
-				t.form[2][i]=1;
+				t.form[1][i]=1;
 			}
 			t.width=3;
 			t.lenght=2;
@@ -107,7 +107,7 @@ shape finalshape(int orientation, int shapes){
 					}
 			}
 			for(i=0;i<a;i++){
-				t.form[3][i]=1;
+				t.form[0][i]=1;
 			}
 			t.width=4;
 			t.lenght=1;
@@ -129,9 +129,9 @@ shape finalshape(int orientation, int shapes){
 						t.form[i][j]=0;
 					}
 			}
-			t.form[1][2]=1;
+			t.form[0][2]=1;
 			for(i=0;i<a;i++){
-				t.form[2][i]=1;
+				t.form[1][i]=1;
 			}
 			t.width=3;
 			t.lenght=2;
@@ -153,9 +153,9 @@ shape finalshape(int orientation, int shapes){
 						t.form[i][j]=0;
 					}
 			}
-			t.form[1][0]=1;
+			t.form[0][0]=1;
 			for(i=0;i<a;i++){
-				t.form[2][i]=1;
+				t.form[1][i]=1;
 			}
 			t.width=3;
 			t.lenght=2;
@@ -178,10 +178,10 @@ shape finalshape(int orientation, int shapes){
 					}
 			}
 			for(i=0;i<2;i++){
-				t.form[2][i]=1;
+				t.form[1][i]=1;
 			}
 			for(i=0;i<2;i++){
-				t.form[1][i+1]=1;
+				t.form[0][i+1]=1;
 			}
 			t.width=3;
 			t.lenght=2;
@@ -204,10 +204,10 @@ shape finalshape(int orientation, int shapes){
 					}
 			}
 			for(i=0;i<2;i++){
-				t.form[2][i+1]=1;
+				t.form[1][i+1]=1;
 			}
 			for(i=0;i<2;i++){
-				t.form[1][i]=1;
+				t.form[0][i]=1;
 			}
 			t.width=3;
 			t.lenght=2;
