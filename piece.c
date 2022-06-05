@@ -8,6 +8,10 @@ int block(int* nborientation){
 	Output: 
 		int: The ID of the chossen block
 	*/
+	if (nborientation == NULL){
+		printf("The nborientation pointer doesn't exist");
+		exit(30);
+	}
 	int select,a;
 	srand(time(NULL));
 	select=1+rand()%7;
@@ -34,15 +38,15 @@ int block(int* nborientation){
 			break;
 		case 6:
 			*nborientation = 2;
-			return 6;	//choose s
+			return 6;	//choose S
 			break;
 		case 7:
 			*nborientation = 2;
-			return 7;	//choose z
+			return 7;	//choose Z
 			break;
 		default:
 			printf("bad shape 1, %d",select);
-			exit(200);
+			exit(31);
 	}
 }
 
@@ -53,6 +57,10 @@ void pieceCopy(int** piece1, int piece2[4][4], int lenght, int width){
 		int** piece1: the array defined with malloc
 		int piece2[4][4]: the fix array
 	*/
+	if (piece1 == NULL){
+		printf("The malloc array doesn't exist");
+		exit(32);
+	}
 	for(int i =0; i<lenght; i++){
 		for (int j =0; j<width; j++){
 			piece1[i][j] = piece2[i][j];
@@ -82,7 +90,6 @@ piece finalshape(int orientation, int shapes){
 			pieceCopy(actpiece.form, temppiece1, actpiece.lenght, actpiece.width);
 			break;
 		case 2://T
-			//orientation = 1+orientation%4; //On ajuste la valeur de l'orientation si l'utilisateur a mis un nombre trop grand
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -110,11 +117,10 @@ piece finalshape(int orientation, int shapes){
 					break;
 				default:
 					printf("Bad orientation, %d", orientation);
-					exit(201);
+					exit(330);
 			}
 			break;
 		case 3://I
-			//orientation = 1+orientation%2;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 4;
@@ -130,11 +136,10 @@ piece finalshape(int orientation, int shapes){
 					break;
 				default:
 					printf("Bad orientation, %d", orientation);
-					exit(201);
+					exit(331);
 			}
 			break;
 		case 4://L
-			//orientation = 1+orientation%4;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -162,11 +167,10 @@ piece finalshape(int orientation, int shapes){
 					break;
 				default:
 					printf("Bad orientation, %d", orientation);
-					exit(201);
+					exit(332);
 			}
 			break;
 		case 5://J
-			//orientation = 1+orientation%4;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -194,11 +198,10 @@ piece finalshape(int orientation, int shapes){
 					break;
 				default:
 					printf("Bad orientation, %d", orientation);
-					exit(201);
+					exit(333);
 			}
 			break;
 		case 6://s
-			//orientation = 1+orientation%2;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -214,11 +217,10 @@ piece finalshape(int orientation, int shapes){
 					break;
 				default:
 					printf("Bad orientation, %d", orientation);
-					exit(201);
+					exit(334);
 			}
 			break;
 		case 7://z
-			//orientation = 1+orientation%2;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -234,12 +236,12 @@ piece finalshape(int orientation, int shapes){
 					break;
 				default:
 					printf("Bad orientation, %d", orientation);
-					exit(201);
+					exit(335);
 			}
 			break;
 		default:
 			printf("bad shape 2, %d",shapes);
-			exit(202);
+			exit(34);
 	}
 	return actpiece;
 }
@@ -275,6 +277,6 @@ void displayPieceChoice(int pieceid){
 			break;
 		default:
 			printf("bad shape 3, %d",pieceid);
-			exit(203);
+			exit(35);
 	}
 }

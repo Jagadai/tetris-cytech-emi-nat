@@ -10,7 +10,7 @@ unsigned long getTimeMicroSec(){
 	return (1000000 * tv.tv_sec) + tv.tv_usec;
 }
 
-char box(int p){	//affichage de chaque case
+char box(int p){
 	/*
 	Role: Displays a box with the correct character
 	Inputs: 
@@ -18,6 +18,10 @@ char box(int p){	//affichage de chaque case
 	Output: 
 		int displaybox: The ASCII code of the character associated (@ or ' ')
 	*/
+	if (p != 0 & p !=1){
+		printf("The box contains incorrect data");
+		exit(20);
+	}
 	int displayBox;
 	switch(p){
 		case 0:
@@ -33,12 +37,16 @@ char box(int p){	//affichage de chaque case
 	return displayBox;
 }
 
-void display(int** grid){	//Affichage du jeu
+void display(int** grid){
 	/*
 	Role: Displays the game grid
 	Inputs: 
 		int** grid: the game grid
 	*/
+	if (grid == NULL){
+		printf("The game grid is empty");
+		exit(21);
+	}
 	printf("Voici votre grille: \n ");
 	for (int i=65; i<(SIDE+65); i++){
 		printf("%c ", i);
@@ -60,12 +68,16 @@ void initGrid(int** grid){
 	Inputs: 
 		int** grid: the game grid
 	*/
-	for(int i=0;i<SIDE;i++){	//initialisation de toute la grille
+	if (grid == NULL){
+		printf("The game grid is empty");
+		exit(22);
+	}
+	for(int i=0;i<SIDE;i++){	//initialisation of all the game grid
 		for(int j=0;j<SIDE;j++){
 			grid[i][j]=0;
 		}
 	}
-	for(int j=0;j<SIDE;j++){
+	for(int j=0;j<SIDE;j++){	//Initialisation of the 'floor'
 		grid[SIDE][j]=1;
 	}
 }
@@ -80,7 +92,15 @@ int possiblePlacement(int** grid, piece npiece, int depth){
 	Output: 
 		int: 0 if the piece can't be placed and 1 else
 	*/
-	for(int i=0; i<npiece.lenght; i++){	//Vérifie si on peut placer la pièce à cet endroit
+	if (grid == NULL){
+		printf("The game grid is empty");
+		exit(23);
+	}
+	if (depth > SIDE){
+		printf("Impossible piece depth");
+		exit(24);
+	}
+	for(int i=0; i<npiece.lenght; i++){	//Vérify if we can put the piece here
 		for(int j=0; j<npiece.width; j++){
 			if (npiece.form[i][j] == grid[depth+i][npiece.location + j] & npiece.form[i][j] == 1){
 				return 0;
@@ -89,7 +109,7 @@ int possiblePlacement(int** grid, piece npiece, int depth){
 	}
 	return 1;
 }
-int lost(int** grid, piece npiece){	//vérifie si l'on a perdu en essayant de placer la pièce tout en haut de l'endroit indiqué par le user
+int lost(int** grid, piece npiece){
 	/*
 	Role: Check if the player lost the game
 	Inputs: 
@@ -98,25 +118,33 @@ int lost(int** grid, piece npiece){	//vérifie si l'on a perdu en essayant de pl
 	Output: 
 		int: 1 if the player lost and 0 else
 	*/
+	if (grid == NULL){
+		printf("The game grid is empty");
+		exit(25);
+	}
 	if (possiblePlacement(grid, npiece, 0) == 0) return 1;
 	return 0;
 }
 
-void placePiece(int** grid, piece npiece){	//à n'appeler que si lost = 0
+void placePiece(int** grid, piece npiece){
 	/*
 	Role: Place the new piece in the game
 	Inputs: 
 		int** grid: the game grid
 		piece npiece: the piece we want to place
 	*/
-	int depth = 1;	//La première ligne a déjà été vérifiée lors de lost, normalement elle est safe
-	while (possiblePlacement(grid, npiece, depth)){	//Tant que pas de collision et que sol pas atteint on descend la pièce
+	if (grid == NULL){
+		printf("The game grid is empty");
+		exit(26);
+	}
+	int depth = 1;	//The first piece has been verified by lost
+	while (possiblePlacement(grid, npiece, depth)){	//While no collision or floor not touched the piece comes down
 		depth++;
 	}
-	depth--; //On remonte d'un cran pour le placement
-	for(int i=0; i<npiece.lenght; i++){	//Place la pièce dans la grille
+	depth--; //We go up a notch for placement
+	for(int i=0; i<npiece.lenght; i++){	//Place the piece in the grid
 		for(int j=0; j<npiece.width; j++){
-			if (npiece.form[i][j] == 1){ //On ne copie que si c'est une case pleine
+			if (npiece.form[i][j] == 1){ //We copy the box only if it's full
 				grid[depth+i][npiece.location+j] = npiece.form[i][j];
 			}
 		}
@@ -124,6 +152,13 @@ void placePiece(int** grid, piece npiece){	//à n'appeler que si lost = 0
 }
 
 int letterConversion(char letter){	//convertie la lettre de la colonne si passée en minuscule
+	/*
+	Role: Convert the letter if it's lowercase letter
+	Inputs: 
+		char letter: the letter we must convert
+	Output: 
+		char letter: the letter converted
+	*/
 	if (letter<107 & letter>96){
 		letter-= 32;
 	}

@@ -12,41 +12,57 @@ int main(){
 	char column;
 	int time1;
 	int time2;
+	int intverifier = 0;	//To verify if the scan took an int
+	int buganticip=0;	//Creation of a variable to detect if the user doesn't enter an int 
 	piece actualpiece;
 	score = malloc(sizeof(int));
 	nborientation = malloc(sizeof(int));
-	*score = 0;
-	grid = malloc((SIDE+1)*sizeof(int*));	//Allocation des lignes du tableau
+	grid = malloc((SIDE+1)*sizeof(int*));	//Allocation of the array lines
+	if (score == NULL){
+		printf("Allocaion failure");
+		exit(10);
+	}
 	if (grid == NULL){
 		printf("Allocaion failure");
-		exit(1);
+		exit(11);
 	}
-	for(int i=0;i<(SIDE+1);i++){		//Allocation colonnes pour chaque ligne
+	for(int i=0;i<(SIDE+1);i++){		//Allocation of the array columns
 		grid[i]=malloc(SIDE*sizeof(int));
 		if (grid[i]==NULL){
 			printf("Allocation failure");
-			exit(2);
+			exit(12);
 		}
 	}
+	*score = 0;
 	initGrid(grid);
-	do{	//On joue tant qu'on a pas perdu
+	do{	//We play while we don't lose
 		display(grid);
 		actualpieceid = block(nborientation);
 		displayPieceChoice(actualpieceid);
 		printf("Vous avez 10 secondes pour placer votre pièce\n");
 		time1 = getTimeMicroSec();
 		if (actualpieceid !=1){
+			buganticip = 0;
 			do{
-				printf("Entrez l'orientation: ");
-				scanf("%d", &orientation);
-			}while(orientation<=0 | orientation>*nborientation);
+				if (buganticip<10){
+					if(buganticip <1){
+						printf("Entrez le chiffre de l'orientation: \n");
+					}
+					intverifier = scanf("%d", &orientation);
+					buganticip++;
+				}
+				else{
+					printf("On a dit d'entrer un chiffre, puisque c'est comme ça on vous laisse pas le choix\n");
+					orientation = 1;
+				}
+			}while(orientation<=0 | orientation>*nborientation | intverifier != 1 & buganticip < 10);
 		}
 		printf("\n");
 		printf("Entrez la lettre de la colonne: ");
-		do{	//On scan la colomne jusqu'à ce qu'elle soit valide
+		do{	//We scan the column until it's valid
 			column = getchar();
 			//scanf("%c", &column);
-		}while(letterConversion(column)<65 | letterConversion(column)>74-actualpiece.width+1); 	//On vérifie si la pièce entre bien dans la grille de jeu
+		}while(letterConversion(column)<65 | letterConversion(column)>74-actualpiece.width+1); 	//We verify if the piece enter well in the game grid
 		column = letterConversion(column) - 65;
 		time2 = getTimeMicroSec();
 		if (time2 - time1 >= 10000000){
@@ -58,7 +74,7 @@ int main(){
 			actualpiece = finalshape(orientation, actualpieceid);
 			actualpiece.location = column;
 		}
-		if (lost(grid, actualpiece) == 0){	//On place la pièce que si on ne perd pas en la plaçant
+		if (lost(grid, actualpiece) == 0){	//We put the piece only if we don't lose by placing it
 			placePiece(grid, actualpiece);
 			cleaning(grid, score);
 		}
