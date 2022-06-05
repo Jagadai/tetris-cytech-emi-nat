@@ -1,5 +1,6 @@
 Roger 189
 Albert 120
-Jacques 94
+Paulo 94
 Jackie 64
 Bernard 12
+Jack 0
