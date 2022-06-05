@@ -7,9 +7,11 @@ int main(){
 	int loser = 0;
 	int actualpieceid;
 	int orientation;
+	int* nborientation;
 	char column;
 	piece actualpiece;
 	score = malloc(sizeof(int));
+	nborientation = malloc(sizeof(int));
 	*score = 0;
 	grid = malloc((SIDE+1)*sizeof(int*));	//Allocation des lignes du tableau
 	if (grid == NULL){
@@ -26,23 +28,23 @@ int main(){
 	initGrid(grid);
 	do{	//On joue tant qu'on a pas perdu
 		display(grid);
-		actualpieceid = block();
-		if (actualpieceid !=1){
-			printf("Choisir l'orientation de la pièce puis la colonne avec la lettre\n");
-		}
+		actualpieceid = block(nborientation);
 		displayPieceChoice(actualpieceid);
 		if (actualpieceid !=1){
-			scanf("%d", &orientation);
+			do{
+				printf("Entrez l'orientation: ");
+				scanf("%d", &orientation);
+			}while(orientation<=0 | orientation>*nborientation);
 		}
 		printf("\n");
+		actualpiece = finalshape(orientation, actualpieceid);
 		do{	//On scan la colomne jusqu'à ce qu'elle soit valide
+			printf("Entrez la colonne: ");
 			scanf("%c", &column);
-		}while(letterConversion(column)<65 | letterConversion(column)>74);
+		}while(letterConversion(column)<65 | letterConversion(column)>74-actualpiece.width+1);	//On vérifie si la pièce entre bien dans la grille de jeu
 		column = column - 65;
 		actualpiece.location = column;
-		if (lost(grid, actualpiece) == 0){
-			//printf("L'id de la pièce est %d\n", actualpieceid);
-			actualpiece = finalshape(orientation, actualpieceid);
+		if (lost(grid, actualpiece) == 0){	//On place la pièce que si on ne perd pas en la plaçant
 			placePiece(grid, actualpiece);
 			cleaning(grid, score);
 		}

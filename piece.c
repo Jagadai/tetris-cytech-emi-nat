@@ -1,29 +1,36 @@
 #include "functions.h"
 
-int block(){
+int block(int* nborientation){
 	int select,a;
 	srand(time(NULL));
 	select=1+rand()%7;
 	switch(select){
 		case 1:
+			*nborientation = 1;
 			return 1;	//choose square
 			break;
 		case 2:
+			*nborientation = 4;
 			return 2;	//choose t
 			break;
 		case 3:
+			*nborientation = 2;
 			return 3;	//choose I
 			break;
 		case 4:
+			*nborientation = 4;
 			return 4;	//choose L
 			break;
 		case 5:
+			*nborientation = 4;
 			return 5;	//choose J
 			break;
 		case 6:
+			*nborientation = 2;
 			return 6;	//choose s
 			break;
 		case 7:
+			*nborientation = 2;
 			return 7;	//choose z
 			break;
 		default:
@@ -213,6 +220,7 @@ piece finalshape(int orientation, int shapes){
 			printf("bad shape 2, %d",shapes);
 			exit(202);
 	}
+	//Juste popur tester la pièce:
 	for (int i =0; i<4; i++){
 		for (int j = 0; j<4; j++){
 			printf("%d", actpiece.form[i][j]);

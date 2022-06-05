@@ -31,7 +31,7 @@ void placePiece(int** grid, piece npiece);
 int letterConversion(int letter);
 
 //piece
-int block();
+int block(int* nborientation);
 piece finalshape(int orientation, int shapes);
 void displayPieceChoice(int pieceid);
 void pieceCopy(int** piece1, int piece2[4][4], int lenght, int width);
