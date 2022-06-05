@@ -2,6 +2,7 @@
 
 int main(){
 	srand(time(NULL));
+	int c;
 	int* score;
 	int** grid;
 	int loser = 0;
@@ -37,15 +38,14 @@ int main(){
 		if (actualpieceid !=1){
 			do{
 				printf("Entrez l'orientation: ");
-				fflush(stdin);
 				scanf("%d", &orientation);
 			}while(orientation<=0 | orientation>*nborientation);
 		}
 		printf("\n");
 		printf("Entrez la lettre de la colonne: ");
 		do{	//On scan la colomne jusqu'à ce qu'elle soit valide
-			fflush(stdin);
-			scanf("%c", &column);
+			column = getchar();
+			//scanf("%c", &column);
 		}while(letterConversion(column)<65 | letterConversion(column)>74-actualpiece.width+1); 	//On vérifie si la pièce entre bien dans la grille de jeu
 		column = letterConversion(column) - 65;
 		time2 = getTimeMicroSec();
@@ -66,6 +66,7 @@ int main(){
 		//loser = 1; //Juste pour test
 	}while(loser == 0);
 	scoreSave(score);
+	free(nborientation);
 	free(score);
 	free(grid);
 	return 0;
