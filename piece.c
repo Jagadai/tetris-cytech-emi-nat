@@ -222,7 +222,7 @@ piece finalshape(int orientation, int shapes){
 	return actpiece;
 }
 
-void diplayPieceChoice(int pieceid){
+void displayPieceChoice(int pieceid){
 	switch(pieceid){
 		case 1:
 			printf("Voici la pièce à placer: \n@@\n@@");
