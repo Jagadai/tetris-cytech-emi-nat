@@ -52,7 +52,7 @@ int main(){
 					buganticip++;
 				}
 				else{
-					printf("On a dit d'entrer un chiffre, puisque c'est comme ça on vous laisse pas le choix\n");
+					printf("On a dit d'entrer un chiffre, puisque c'est comme ça on vous laisse pas le choix puis on joue un peu à votre place\n");
 					orientation = 1;
 				}
 			}while(orientation<=0 | orientation>*nborientation | intverifier != 1 & buganticip < 10);
