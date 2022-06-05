@@ -220,20 +220,13 @@ piece finalshape(int orientation, int shapes){
 			printf("bad shape 2, %d",shapes);
 			exit(202);
 	}
-	//Juste popur tester la pièce:
-	for (int i =0; i<4; i++){
-		for (int j = 0; j<4; j++){
-			printf("%d", actpiece.form[i][j]);
-		}
-		printf("\n");
-	}
 	return actpiece;
 }
 
 void displayPieceChoice(int pieceid){
 	switch(pieceid){
 		case 1:
-			printf("Voici la pièce à placer: \n@@\n@@");
+			printf("Voici la pièce à placer: \n@@\n@@\n");
 			break;
 		case 2:
 			printf("1    2    3    4    \n @   @@@  @     @  \n@@@   @   @@   @@  \n          @     @  \n");

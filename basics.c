@@ -1,5 +1,11 @@
 #include "functions.h"
 
+unsigned long getTimeMicroSec(){
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (1000000 * tv.tv_sec) + tv.tv_usec;
+}
+
 char box(int p){	//affichage de chaque case
 	int displayBox;
 	switch(p){

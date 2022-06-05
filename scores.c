@@ -75,7 +75,7 @@ void scoreSave(int* score){
 		exit(4);
 	}
 	
-	printf("Vous avez perdu, entrez votre nom sans espace: ");
+	printf("Vous avez perdu, e ntrez votre nom sans espace: ");
 	scanf("%s", playername);	//scan du nom du joueur
 	printf("%s, votre score est de %d\n", playername, *score);	//Affichage nom du joueur et score
 	

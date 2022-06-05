@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <errno.h>
+#include <sys/time.h>
 #define SIDE 10	//Taille de la grille en largeur et longueur
 
 typedef struct{
@@ -20,6 +21,7 @@ void actualscore(int* score, int combo);
 void scoreSave(int* score);
 
 //basics
+unsigned long getTimeMicroSec();
 char box(int p);
 void display(int** grid);
 void randomGrid(int** grid);

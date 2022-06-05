@@ -9,6 +9,8 @@ int main(){
 	int orientation;
 	int* nborientation;
 	char column;
+	int time1;
+	int time2;
 	piece actualpiece;
 	score = malloc(sizeof(int));
 	nborientation = malloc(sizeof(int));
@@ -30,6 +32,8 @@ int main(){
 		display(grid);
 		actualpieceid = block(nborientation);
 		displayPieceChoice(actualpieceid);
+		printf("Vous avez 10 secondes pour placer votre pièce\n");
+		time1 = getTimeMicroSec();
 		if (actualpieceid !=1){
 			do{
 				printf("Entrez l'orientation: ");
@@ -37,13 +41,21 @@ int main(){
 			}while(orientation<=0 | orientation>*nborientation);
 		}
 		printf("\n");
-		actualpiece = finalshape(orientation, actualpieceid);
 		printf("Entrez la lettre de la colonne: ");
 		do{	//On scan la colomne jusqu'à ce qu'elle soit valide
 			scanf("%c", &column);
 		}while(letterConversion(column)<65 | letterConversion(column)>74-actualpiece.width+1); 	//On vérifie si la pièce entre bien dans la grille de jeu
 		column = letterConversion(column) - 65;
-		actualpiece.location = column;
+		time2 = getTimeMicroSec();
+		if (time2 - time1 >= 10000000){
+			printf("Vous avez mis trop de temps pour répondre, la pièce est placée au hasard");
+			actualpiece = finalshape(1+rand()%*nborientation, actualpieceid);
+			actualpiece.location = rand()%10;
+		}
+		else{
+			actualpiece = finalshape(orientation, actualpieceid);
+			actualpiece.location = column;
+		}
 		if (lost(grid, actualpiece) == 0){	//On place la pièce que si on ne perd pas en la plaçant
 			placePiece(grid, actualpiece);
 			cleaning(grid, score);
