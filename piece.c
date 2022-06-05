@@ -54,6 +54,7 @@ piece finalshape(int orientation, int shapes){
 			pieceCopy(actpiece.form, temppiece1, actpiece.lenght, actpiece.width);
 			break;
 		case 2://T
+			orientation = 1+orientation%4; //On ajuste la valeur de l'orientation si l'utilisateur a mis un nombre trop grand
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -85,6 +86,7 @@ piece finalshape(int orientation, int shapes){
 			}
 			break;
 		case 3://I
+			orientation = 1+orientation%2;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 4;
@@ -104,6 +106,7 @@ piece finalshape(int orientation, int shapes){
 			}
 			break;
 		case 4://L
+			orientation = 1+orientation%4;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -135,6 +138,7 @@ piece finalshape(int orientation, int shapes){
 			}
 			break;
 		case 5://J
+			orientation = 1+orientation%4;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -166,6 +170,7 @@ piece finalshape(int orientation, int shapes){
 			}
 			break;
 		case 6://s
+			orientation = 1+orientation%2;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -185,6 +190,7 @@ piece finalshape(int orientation, int shapes){
 			}
 			break;
 		case 7://z
+			orientation = 1+orientation%2;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -205,7 +211,7 @@ piece finalshape(int orientation, int shapes){
 			break;
 		default:
 			printf("bad shape 2, %d",shapes);
-			exit(200);
+			exit(202);
 	}
 	for (int i =0; i<4; i++){
 		for (int j = 0; j<4; j++){
@@ -219,7 +225,7 @@ piece finalshape(int orientation, int shapes){
 void diplayPieceChoice(int pieceid){
 	switch(pieceid){
 		case 1:
-			printf("1\n@@\n@@");
+			printf("Voici la pièce à placer: \n@@\n@@");
 			break;
 		case 2:
 			printf("1    2    3    4    \n @   @@@  @     @  \n@@@   @   @@   @@  \n          @     @  \n");
@@ -241,7 +247,7 @@ void diplayPieceChoice(int pieceid){
 			printf("1    2  \n@@    @ \n @@  @@ \n     @  \n");
 			break;
 		default:
-			printf("bad shape, %d",pieceid);
-			exit(200);
+			printf("bad shape 3, %d",pieceid);
+			exit(203);
 	}
 }
