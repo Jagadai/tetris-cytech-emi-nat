@@ -1,6 +1,13 @@
 #include "functions.h"
 
 int block(int* nborientation){
+	/*
+	Role: Select the actual block and determine how many orientations does it have
+	Inputs: 
+		int* nborientation: the pointer of the number of the piece's orientations
+	Output: 
+		int: The ID of the chossen block
+	*/
 	int select,a;
 	srand(time(NULL));
 	select=1+rand()%7;
@@ -40,6 +47,12 @@ int block(int* nborientation){
 }
 
 void pieceCopy(int** piece1, int piece2[4][4], int lenght, int width){
+	/*
+	Role: Copy a piece from a fix array to an array defined with malloc
+	Inputs: 
+		int** piece1: the array defined with malloc
+		int piece2[4][4]: the fix array
+	*/
 	for(int i =0; i<lenght; i++){
 		for (int j =0; j<width; j++){
 			piece1[i][j] = piece2[i][j];
@@ -48,6 +61,14 @@ void pieceCopy(int** piece1, int piece2[4][4], int lenght, int width){
 }
 
 piece finalshape(int orientation, int shapes){
+	/*
+	Role: Build the actual piece
+	Inputs: 
+		int orientation: The piece's orientation
+		int shapes: the ID of the chossen piece
+	Output: 
+		piece actpiece: the piece build in an array
+	*/
 	piece actpiece;
 	actpiece.form = malloc(4*sizeof(int*));
 	for (int i=0; i<4; i++){
@@ -224,6 +245,11 @@ piece finalshape(int orientation, int shapes){
 }
 
 void displayPieceChoice(int pieceid){
+	/*
+	Role: Displays the choice of orientation for each piece
+	Inputs: 
+		int pieceid: the ID of the chossen piece
+	*/
 	switch(pieceid){
 		case 1:
 			printf("Voici la pièce à placer: \n@@\n@@\n");

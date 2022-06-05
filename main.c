@@ -63,7 +63,6 @@ int main(){
 			cleaning(grid, score);
 		}
 		else loser = 1;
-		//loser = 1; //Juste pour test
 	}while(loser == 0);
 	scoreSave(score);
 	free(nborientation);
