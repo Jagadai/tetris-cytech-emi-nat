@@ -21,7 +21,7 @@ int block(){
 			return 5;	//choose J
 			break;
 		case 6:
-			return 6;	//choose r
+			return 6;	//choose s
 			break;
 		case 7:
 			return 7;	//choose z
@@ -54,7 +54,7 @@ piece finalshape(int orientation, int shapes){
 			pieceCopy(actpiece.form, temppiece1, actpiece.lenght, actpiece.width);
 			break;
 		case 2://T
-			orientation = 1+orientation%4; //On ajuste la valeur de l'orientation si l'utilisateur a mis un nombre trop grand
+			//orientation = 1+orientation%4; //On ajuste la valeur de l'orientation si l'utilisateur a mis un nombre trop grand
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -86,7 +86,7 @@ piece finalshape(int orientation, int shapes){
 			}
 			break;
 		case 3://I
-			orientation = 1+orientation%2;
+			//orientation = 1+orientation%2;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 4;
@@ -106,7 +106,7 @@ piece finalshape(int orientation, int shapes){
 			}
 			break;
 		case 4://L
-			orientation = 1+orientation%4;
+			//orientation = 1+orientation%4;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -138,7 +138,7 @@ piece finalshape(int orientation, int shapes){
 			}
 			break;
 		case 5://J
-			orientation = 1+orientation%4;
+			//orientation = 1+orientation%4;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -170,7 +170,7 @@ piece finalshape(int orientation, int shapes){
 			}
 			break;
 		case 6://s
-			orientation = 1+orientation%2;
+			//orientation = 1+orientation%2;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;
@@ -190,7 +190,7 @@ piece finalshape(int orientation, int shapes){
 			}
 			break;
 		case 7://z
-			orientation = 1+orientation%2;
+			//orientation = 1+orientation%2;
 			switch(orientation){
 				case 1:
 					actpiece.lenght = 2;

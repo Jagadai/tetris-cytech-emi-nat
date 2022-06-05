@@ -8,7 +8,7 @@ basics.o: basics.c functions.h
 
 scores.o: scores.c functions.h
 	gcc -c scores.c -o scores.o
-	
+
 piece.o: piece.c functions.h
 	gcc -c piece.c -o piece.o
 

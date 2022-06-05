@@ -27,9 +27,13 @@ int main(){
 	do{	//On joue tant qu'on a pas perdu
 		display(grid);
 		actualpieceid = block();
-		printf("Choisir l'orientation de la pièce puis la colonne avec la lettre\n");
-		diplayPieceChoice(actualpieceid);
-		scanf("%d", &orientation);
+		if (actualpieceid !=1){
+			printf("Choisir l'orientation de la pièce puis la colonne avec la lettre\n");
+		}
+		displayPieceChoice(actualpieceid);
+		if (actualpieceid !=1){
+			scanf("%d", &orientation);
+		}
 		printf("\n");
 		do{	//On scan la colomne jusqu'à ce qu'elle soit valide
 			scanf("%c", &column);

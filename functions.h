@@ -33,5 +33,5 @@ int letterConversion(int letter);
 //piece
 int block();
 piece finalshape(int orientation, int shapes);
-void diplayPieceChoice(int pieceid);
+void displayPieceChoice(int pieceid);
 void pieceCopy(int** piece1, int piece2[4][4], int lenght, int width);

@@ -59,7 +59,6 @@ int lost(int** grid, piece npiece){	//vérifie si l'on a perdu en essayant de pl
 }
 
 void placePiece(int** grid, piece npiece){	//à n'appeler que si lost = 0
-	npiece = adjustment(npiece);	//Ajuste la pièce si trop à droite
 	int depth = 1;	//La première ligne a déjà été vérifiée lors de lost, normalement elle est safe
 	while (possiblePlacement(grid, npiece, depth)){	//Tant que pas de collision et que sol pas atteint on descend la pièce
 		depth++;
