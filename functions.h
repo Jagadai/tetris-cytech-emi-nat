@@ -28,7 +28,7 @@ int possiblePlacement(int** grid, piece npiece, int depth);
 int lost(int** grid, piece npiece);
 piece adjustment(piece npiece);
 void placePiece(int** grid, piece npiece);
-int letterConversion(int letter);
+int letterConversion(char letter);
 
 //piece
 int block(int* nborientation);

@@ -73,7 +73,9 @@ void placePiece(int** grid, piece npiece){	//à n'appeler que si lost = 0
 	}
 }
 
-int letterConversion(int letter){	//convertie la lettre de la colonne si passée en minuscule
-	if (letter<107 & letter>96) letter = letter-32;
+int letterConversion(char letter){	//convertie la lettre de la colonne si passée en minuscule
+	if (letter<107 & letter>96){
+		letter-= 32;
+	}
 	return letter;
 }

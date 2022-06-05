@@ -38,11 +38,11 @@ int main(){
 		}
 		printf("\n");
 		actualpiece = finalshape(orientation, actualpieceid);
+		printf("Entrez la lettre de la colonne: ");
 		do{	//On scan la colomne jusqu'à ce qu'elle soit valide
-			printf("Entrez la colonne: ");
 			scanf("%c", &column);
-		}while(letterConversion(column)<65 | letterConversion(column)>74-actualpiece.width+1);	//On vérifie si la pièce entre bien dans la grille de jeu
-		column = column - 65;
+		}while(letterConversion(column)<65 | letterConversion(column)>74-actualpiece.width+1); 	//On vérifie si la pièce entre bien dans la grille de jeu
+		column = letterConversion(column) - 65;
 		actualpiece.location = column;
 		if (lost(grid, actualpiece) == 0){	//On place la pièce que si on ne perd pas en la plaçant
 			placePiece(grid, actualpiece);
