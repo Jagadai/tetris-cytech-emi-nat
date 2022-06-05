@@ -44,7 +44,7 @@ int main(){
 		if (actualpieceid !=1){
 			buganticip = 0;
 			do{
-				if (buganticip<10){
+				if (buganticip<10){	//If the user has made a mistake less than ten times or if he has not entered anything, he has the right to choose an orientation again
 					if(buganticip <1){
 						printf("Entrez le chiffre de l'orientation: \n");
 					}
